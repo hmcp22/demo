@@ -2,3 +2,5 @@ pyautogen
 pyautogen[lmm]
 langfuse
 openai
+datamodel-code-generator
+gitpython
