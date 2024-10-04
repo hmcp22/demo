@@ -15,9 +15,6 @@ REPO_DIR = Path(__file__).parent
 client = openai.OpenAI(api_key="anything", base_url="http://localhost:9000")
 
 
-# TODO: Add logging to langfuse
-# TODO: include app version in the logs --> use git hash?
-# TODO: add prompts to langfuse --> log json schema in the prompt config
 # TODO: add examples to langfuse dataset
 # TODO: add a scoring function
 # TODO: use the runs feature in langfuse to run eval using langfuse dataset with custom scoring function
