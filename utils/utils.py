@@ -4,6 +4,7 @@ from utils.schema import ChangeInAccountValue
 from git import Repo
 from pathlib import Path
 from typing import Union, Dict, Any
+from autogen.code_utils import extract_code
 
 
 langfuse_client = Langfuse()
@@ -126,8 +127,11 @@ def get_git_repository_info(
         "untracked_files": repo.untracked_files,
     }
 
+def extract_jsons_from_message_content(message_content):
+    code_outputs = extract_code(message_content)
+    json_outputs = []
+    for code_output in code_outputs:
+        if code_output[0] == "json":
+            json_outputs.append(code_output[1])
+    return json_outputs
 
-if __name__ == "__main__":
-
-    # create_qwen_extractor_langfuse_prompt()
-    create_openai_extractor_langfuse_prompt()

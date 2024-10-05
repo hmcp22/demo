@@ -2,9 +2,13 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class ChangeInAccountValue(BaseModel):
-    reporting_period: Optional[str] = Field(
+    reporting_period_start_date: Optional[str] = Field(
         None,
-        description="The time period over which the account value change is being reported.",
+        description="The start date for the time period over which the account value change is being reported. In the format YYYY-MM-DD.",
+    )
+    reporting_period_end_date: Optional[str] = Field(
+        None,
+        description="The end date for the time period over which the account value change is being reported. In the format YYYY-MM-DD.",
     )
     starting_value: Optional[float] = Field(
         None, description="The value of the account at the start of the period."
@@ -20,6 +24,10 @@ class ChangeInAccountValue(BaseModel):
     transfer_of_securities: Optional[float] = Field(
         None,
         description="The value of securities transferred in or out of the account during the period.",
+    )
+    transaction_costs_fees_and_charges: Optional[float] = Field(
+        None,
+        description="The total transaction costs, fees, and charges incurred during the period.",
     )
     income_reinvested: Optional[float] = Field(
         None,
@@ -43,13 +51,5 @@ class ChangeInAccountValue(BaseModel):
     )
     total_change_in_value: Optional[float] = Field(
         None,
-        description="The overall change in the account value during the period, including deposits and withdrawals.",
-    )
-    percentage_change: Optional[float] = Field(
-        None,
-        description="The percentage change in the account value during the period.",
-    )
-    total_withdrawals_and_deposits: Optional[float] = Field(
-        None,
-        description="The total amount of withdrawals and deposits made during the period.",
+        description="The overall change in the account value during the period, including deposits, withdrawals and any accrued income.",
     )
