@@ -36,7 +36,6 @@ class LangfuseConversableAgent(ConversableAgent):
 
         system_message = None
         if langfuse_prompt_name:
-            # the langfuse_client is used in this call
             system_message = self.log_langfuse_prompt(
                 langfuse_prompt_name, langfuse_prompt_args, name
             )
@@ -173,20 +172,7 @@ class LangfuseConversableAgent(ConversableAgent):
         sender: Agent | None = None,
         **kwargs: Any,
     ) -> str | Dict | None:
-        """
-        Modified generate_reply method that logs the generated reply to langfuse
-        under a new langfuse generation observation with the agent's name.
-        Also adds generation usage stats to the logging context.
-
-        Args:
-            messages (List[Dict[str, Any]] | None): A list of messages to generate a reply from.
-            sender (Agent | None): The sender agent of the messages.
-            **kwargs (Any): Additional keyword arguments.
-
-        Returns:
-            str | Dict | None: The generated reply.
-
-        """
+        
         langfuse_context.update_current_observation(
             name=f"{self.name} --> {sender.name}", input=self.chat_messages[sender]
         )

@@ -10,7 +10,6 @@ from autogen.code_utils import extract_code
 langfuse_client = Langfuse()
 
 
-# Function to encode the image
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
@@ -105,18 +104,6 @@ def create_openai_extractor_langfuse_prompt():
 def get_git_repository_info(
     repo_path: Union[Path, str],
 ) -> Dict[str, Any]:
-    """
-    Returns a dict with git repository info for the git repository specified
-    by repo_path.
-
-    Args:
-        repo_path (Union[Path,str]): Path to a directory inside of a git
-            repository.
-
-    Returns:
-        Dict[str, Any]: Returns dict with commit_hash, branch_name, remote_url,
-        git_diff and untracked_files list.
-    """
 
     repo = Repo(path=repo_path, search_parent_directories=True)
     return {
