@@ -4,17 +4,23 @@ from utils.autogen_langfuse import (
     LangfuseConversableAgent,
 )
 import asyncio
-from config import REPO_DIR, AUTOGEN_ALL_LLMS_CONFIG, MODELS
-from langfuse.decorators import observe
-
+from config import REPO_DIR, AUTOGEN_ALL_LLMS_CONFIG
+from langfuse.decorators import observe, langfuse_context
+from utils.utils import get_git_repository_info
 
 @observe()
 async def multiagent_extractor(image_path):
 
+
+    git_info = get_git_repository_info(REPO_DIR)
+    langfuse_context.update_current_trace(
+        session_id="multiagent_extractor", version=git_info["commit_hash"]
+    )
+
     # model = "qwen2-vl-7b"
     models = [
         "gpt-4o",
-        # "qwen2-vl-7b",
+        "qwen2-vl-7b",
         # "pixtral-12b",
         # "claude-3.5-sonnet",
         "gpt-4o-mini",
@@ -73,14 +79,20 @@ async def multiagent_extractor(image_path):
 
 
 
+
 if __name__ == "__main__":
 
-    image_path = REPO_DIR / "data" / "fidelity.png"
+    # image_path = REPO_DIR / "data" / "fidelity.png"
+    from pathlib import Path
 
-    loop = asyncio.get_event_loop()
+    for image_path in Path(REPO_DIR / "data").glob("*.png"):
 
-    chat_results = loop.run_until_complete(multiagent_extractor(image_path))
+        loop = asyncio.get_event_loop()
+
+        chat_results = loop.run_until_complete(multiagent_extractor(image_path))
+
+        print(chat_results)
+
 
     loop.close()
 
-    print(chat_results)

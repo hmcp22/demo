@@ -7,8 +7,9 @@ from utils.autogen_langfuse import (
 )
 import asyncio
 from config import REPO_DIR, AUTOGEN_ALL_LLMS_CONFIG
-from langfuse.decorators import observe
+from langfuse.decorators import observe, langfuse_context
 from dotenv import load_dotenv
+from utils.utils import get_git_repository_info
 
 load_dotenv()
 
@@ -45,12 +46,17 @@ def is_termination_msg(msg):
 @observe()
 async def multiagent_extractor_new(image_path):
 
+    git_info = get_git_repository_info(REPO_DIR)
+    langfuse_context.update_current_trace(
+        session_id="multiagent_extractor_new", version=git_info["commit_hash"]
+    )
+
     models = [
         "gpt-4o",
         # "qwen2-vl-7b",
         # "pixtral-12b",
-        # "claude-3.5-sonnet",
-        # "gpt-4o-mini",
+        "claude-3.5-sonnet",
+        "gpt-4o-mini",
         # "llama-3.2-11b-vision-preview",
     ]
 
@@ -126,7 +132,6 @@ async def multiagent_extractor_new(image_path):
     )
 
     summary = verifier_agent.get_chat_results()
-
 
     return chat_results
 

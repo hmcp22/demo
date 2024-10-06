@@ -5,7 +5,11 @@ from copy import deepcopy
 from langfuse.decorators import observe, langfuse_context
 from utils.utils import get_git_repository_info
 
-from config import langfuse_client, REPO_DIR, OPENAI_CLIENT
+from config import langfuse_client, REPO_DIR
+import openai
+from os import getenv
+
+OPENAI_CLIENT = openai.OpenAI(api_key="anything", base_url=getenv("LITELLM_HOST"))
 
 
 @observe()

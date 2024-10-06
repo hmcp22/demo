@@ -28,7 +28,6 @@ langfuse_client = Langfuse(
 
 REPO_DIR = Path(__file__).parent
 
-OPENAI_CLIENT = openai.OpenAI(api_key="anything", base_url=getenv("LITELLM_HOST"))
 
 AUTOGEN_ALL_LLMS_CONFIG = {"config_list":[]}
 
