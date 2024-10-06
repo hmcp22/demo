@@ -1,24 +1,18 @@
 from utils.utils import encode_image
 from pathlib import Path
-from langfuse.openai import openai
-from langfuse import Langfuse
 import json
 from copy import deepcopy
 from langfuse.decorators import observe, langfuse_context
 from utils.utils import get_git_repository_info
-from autogen.code_utils import extract_code
 
 from config import langfuse_client, REPO_DIR, OPENAI_CLIENT
 
-
-# TODO: use the runs feature in langfuse to run eval using langfuse dataset with custom scoring function
-# TODO: so far its all single round, one shot, try with multi-round and multiple agents (multiple llms) if we have time
 
 @observe()
 def openai_single_round_extractor_with_structured_outputs(
     image_path: Path, langfuse_prompt_name: str, model: str
 ):
-    
+
     git_info = get_git_repository_info(REPO_DIR)
     langfuse_context.update_current_trace(version=git_info["commit_hash"])
 
@@ -121,5 +115,7 @@ if __name__ == "__main__":
     table_images_dir = REPO_DIR / "data"
 
     for image_path in table_images_dir.glob(f"*.png"):
-        result = non_openai_zero_shot_extractor(image_path, "qwen_extractor_prompt")
+        result = non_openai_single_round_extractor(
+            image_path, "qwen_extractor_prompt", model="qwen2-vl-7b"
+        )
         print(result)

@@ -8,12 +8,12 @@ from utils.utils import extract_jsons_from_message_content
 from pathlib import Path
 
 models = [
-    "gpt-4o",
-    "qwen2-vl-7b",
+    # "gpt-4o",
+    # "qwen2-vl-7b",
     "pixtral-12b",
-    "claude-3.5-sonnet",
-    "gpt-4o-mini",
-    "llama-3.2-11b-vision-preview",
+    # "claude-3.5-sonnet",
+    # "gpt-4o-mini",
+    # "llama-3.2-11b-vision-preview",
 ]
 
 dataset = langfuse_client.get_dataset("brokerage_statements_table_extraction")
@@ -35,7 +35,6 @@ def eval_exact_match(output_json, expected_output_json):
 
 
 for item in dataset.items:
-    # Make sure your application function is decorated with @observe decorator to automatically link the trace
 
     image_path = item.input["args"][0]
 
@@ -78,5 +77,4 @@ for item in dataset.items:
                 print(f"Error: {e}")
                 continue
 
-# Flush the langfuse client to ensure all data is sent to the server at the end of the experiment run
 langfuse_client.flush()
