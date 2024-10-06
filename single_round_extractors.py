@@ -119,7 +119,10 @@ if __name__ == "__main__":
     table_images_dir = REPO_DIR / "data"
 
     for image_path in table_images_dir.glob(f"*.png"):
-        result = non_openai_single_round_extractor(
-            image_path, "qwen_extractor_prompt", model="qwen2-vl-7b"
+        result = openai_single_round_extractor_with_structured_outputs(
+            image_path, "extractor_system_prompt", model="gpt-4o"
         )
+        # result = non_openai_single_round_extractor(
+        #     image_path, "qwen_extractor_prompt", model="pixtral-12b"
+        # )
         print(result)

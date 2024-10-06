@@ -55,7 +55,7 @@ async def multiagent_extractor_new(image_path):
         "gpt-4o",
         # "qwen2-vl-7b",
         # "pixtral-12b",
-        "claude-3.5-sonnet",
+        # "claude-3.5-sonnet",
         "gpt-4o-mini",
         # "llama-3.2-11b-vision-preview",
     ]

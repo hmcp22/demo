@@ -20,7 +20,7 @@ async def multiagent_extractor(image_path):
     # model = "qwen2-vl-7b"
     models = [
         "gpt-4o",
-        "qwen2-vl-7b",
+        # "qwen2-vl-7b",
         # "pixtral-12b",
         # "claude-3.5-sonnet",
         "gpt-4o-mini",
